@@ -1,0 +1,49 @@
+app = "social-andri-dk"
+kill_signal = "SIGINT"
+kill_timeout = 5
+processes = []
+
+[env]
+  GTS_ACCOUNTS_REGISTRATION_OPEN = "false"
+  GTS_ACCOUNT_DOMAIN = "andri.dk"
+  GTS_DB_ADDRESS = "/data/gotosocial.db"
+  GTS_DB_TYPE = "sqlite"
+  GTS_HOST = "social.andri.dk"
+  GTS_LETSENCRYPT_ENABLED = "false"
+  GTS_PORT = "8080"
+  GTS_PROTOCOL = "https"
+  GTS_STORAGE_BACKEND_LOCAL_BASE_PATH = "/data/storage"
+
+[mounts]
+  destination = "/data"
+  source = "social"  
+
+[experimental]
+  allowed_public_ports = []
+  auto_rollback = true
+
+[[services]]
+  http_checks = []
+  internal_port = 8080
+  processes = ["app"]
+  protocol = "tcp"
+  script_checks = []
+  [services.concurrency]
+    hard_limit = 25
+    soft_limit = 20
+    type = "connections"
+
+  [[services.ports]]
+    force_https = true
+    handlers = ["http"]
+    port = 80
+
+  [[services.ports]]
+    handlers = ["tls", "http"]
+    port = 443
+
+  [[services.tcp_checks]]
+    grace_period = "1s"
+    interval = "15s"
+    restart_limit = 0
+    timeout = "2s"
