@@ -12,7 +12,7 @@ processes = []
   GTS_LETSENCRYPT_ENABLED = "false"
   GTS_PORT = "8080"
   GTS_PROTOCOL = "https"
-  GTS_STORAGE_BACKEND_LOCAL_BASE_PATH = "/data/storage"
+  GTS_STORAGE_LOCAL_BASE_PATH = "/data/storage"
 
 [mounts]
   destination = "/data"
